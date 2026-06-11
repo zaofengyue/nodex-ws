@@ -3,218 +3,368 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beyond The Tide</title>
+<title>The Island Journal</title>
 
 <style>
+:root{
+    --bg:#f6f2ea;
+    --paper:#fffdf8;
+    --text:#2b2b2b;
+    --muted:#7a7a7a;
+    --accent:#9c7b56;
+    --line:#e5ddd0;
+}
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-    font-family: "Segoe UI", sans-serif;
-    background:
-        radial-gradient(circle at top, #12385a 0%, #081624 40%, #02070d 100%);
-    color:#d7e7f5;
-    line-height:1.8;
-    overflow-x:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height:1.9;
 }
 
 .hero{
-    height:100vh;
+    min-height:100vh;
     display:flex;
-    flex-direction:column;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+    position:relative;
+    background:
+        linear-gradient(
+            rgba(245,240,230,.65),
+            rgba(245,240,230,.85)
+        ),
+        url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80");
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
     text-align:center;
-    padding:20px;
+    max-width:900px;
+    padding:40px;
+}
+
+.hero-subtitle{
+    letter-spacing:5px;
+    text-transform:uppercase;
+    font-size:.85rem;
+    color:var(--accent);
+    margin-bottom:20px;
 }
 
 .hero h1{
-    font-size:4rem;
-    letter-spacing:8px;
-    font-weight:300;
-    text-transform:uppercase;
+    font-size:clamp(3rem,8vw,7rem);
+    font-weight:400;
+    letter-spacing:2px;
+    margin-bottom:20px;
 }
 
 .hero p{
-    margin-top:20px;
-    max-width:600px;
-    color:#9fc3df;
+    max-width:650px;
+    margin:auto;
+    color:#444;
     font-size:1.1rem;
 }
 
-.scroll{
+.scroll-indicator{
     position:absolute;
     bottom:40px;
-    color:#7ea9c8;
-    font-size:0.9rem;
-    letter-spacing:2px;
+    left:50%;
+    transform:translateX(-50%);
+    color:var(--muted);
+    font-size:.85rem;
+    letter-spacing:3px;
 }
 
-.container{
-    max-width:900px;
+.magazine{
+    max-width:1200px;
     margin:auto;
-    padding:80px 25px;
+    padding:100px 30px;
 }
 
-.post{
-    margin-bottom:90px;
+.section-title{
+    text-align:center;
+    margin-bottom:80px;
 }
 
-.post h2{
-    font-weight:300;
-    font-size:2rem;
-    margin-bottom:15px;
-    color:#eef7ff;
+.section-title span{
+    color:var(--accent);
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-size:.8rem;
 }
 
-.meta{
-    color:#6f93ad;
-    font-size:0.8rem;
-    letter-spacing:1px;
-    margin-bottom:25px;
+.section-title h2{
+    margin-top:15px;
+    font-size:3rem;
+    font-weight:400;
 }
 
-.post p{
+.feature{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:60px;
+    align-items:center;
+    margin-bottom:120px;
+}
+
+.feature-image{
+    height:550px;
+    background:url("https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80");
+    background-size:cover;
+    background-position:center;
+    border-radius:2px;
+}
+
+.feature-content h3{
+    font-size:2.5rem;
+    font-weight:400;
     margin-bottom:20px;
-    color:#c6d8e7;
+}
+
+.feature-content .meta{
+    color:var(--accent);
+    margin-bottom:25px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:.8rem;
+}
+
+.feature-content p{
+    margin-bottom:20px;
 }
 
 .quote{
-    margin:30px 0;
-    padding-left:20px;
-    border-left:3px solid #3e7ca5;
-    color:#91b8d3;
+    margin:80px auto;
+    max-width:800px;
+    text-align:center;
+    font-size:2rem;
+    line-height:1.6;
+    color:#4b4b4b;
     font-style:italic;
+}
+
+.quote::before{
+    content:"“";
+    font-size:4rem;
+    color:var(--accent);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:40px;
+}
+
+.card{
+    background:var(--paper);
+    padding:35px;
+    border:1px solid var(--line);
+}
+
+.card .category{
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:.75rem;
+}
+
+.card h4{
+    margin:15px 0;
+    font-size:1.6rem;
+    font-weight:400;
+}
+
+.card p{
+    color:#555;
 }
 
 .divider{
     height:1px;
-    background:linear-gradient(
-        to right,
-        transparent,
-        rgba(120,170,210,.5),
-        transparent
-    );
-    margin:70px 0;
+    background:var(--line);
+    margin:120px 0;
 }
 
-footer{
+.footer{
     text-align:center;
-    padding:60px 20px;
-    color:#6d8ba0;
-    border-top:1px solid rgba(255,255,255,0.05);
+    padding:80px 20px;
+    border-top:1px solid var(--line);
 }
 
-.wave{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:120px;
-    background:
-    linear-gradient(
-        transparent,
-        rgba(18,56,90,0.25)
-    );
-    pointer-events:none;
+.footer h3{
+    font-size:2rem;
+    font-weight:400;
+    margin-bottom:10px;
 }
 
-.highlight{
-    color:#8fd3ff;
+.footer p{
+    color:var(--muted);
+}
+
+@media(max-width:900px){
+
+.feature{
+    grid-template-columns:1fr;
+}
+
+.feature-image{
+    height:350px;
+}
+
+.quote{
+    font-size:1.4rem;
+}
+
+.hero h1{
+    font-size:4rem;
+}
 }
 </style>
 </head>
-
 <body>
 
 <section class="hero">
-    <h1>Beyond The Tide</h1>
-    <p>
-        A journal about oceans, distance, and the quiet beauty
-        of being alone beneath an endless sky.
-    </p>
-    <div class="scroll">SCROLL DOWN</div>
+    <div class="hero-content">
+        <div class="hero-subtitle">
+            Volume I · Summer Edition
+        </div>
+
+        <h1>The Island Journal</h1>
+
+        <p>
+            Notes from a forgotten island where time slows,
+            waves become companions, and solitude turns into a form of luxury.
+        </p>
+    </div>
+
+    <div class="scroll-indicator">
+        SCROLL TO EXPLORE
+    </div>
 </section>
 
-<div class="container">
+<main class="magazine">
 
-    <article class="post">
-        <h2>The Language of Waves</h2>
-        <div class="meta">May 12, 2026 · Ocean Journal</div>
+    <div class="section-title">
+        <span>Featured Story</span>
+        <h2>The Art of Being Alone</h2>
+    </div>
 
-        <p>
-            The ocean never speaks in words, yet it says more than most conversations.
-            Every wave arrives with a message from somewhere far beyond the horizon,
-            only to disappear before it can be fully understood.
-        </p>
+    <section class="feature">
 
-        <p>
-            Standing alone on a shoreline feels strangely familiar.
-            The sea asks for nothing. It simply exists,
-            moving endlessly between presence and absence.
-        </p>
+        <div class="feature-image"></div>
 
-        <div class="quote">
-            "Some silences are not empty. They are filled with water, wind, and memory."
+        <div class="feature-content">
+            <div class="meta">
+                Island Diary · June 2026
+            </div>
+
+            <h3>A Morning Without Clocks</h3>
+
+            <p>
+                On the island, sunrise is the only schedule.
+                There are no notifications, no traffic,
+                and no urgency competing for attention.
+            </p>
+
+            <p>
+                The ocean arrives before breakfast,
+                painting silver reflections across the sand.
+                Hours pass without being measured.
+            </p>
+
+            <p>
+                What feels like isolation at first slowly transforms
+                into something rarer: uninterrupted presence.
+            </p>
         </div>
-    </article>
+
+    </section>
+
+    <div class="quote">
+        The sea does not ask who you are.
+        It only asks whether you are willing to listen.
+    </div>
 
     <div class="divider"></div>
 
-    <article class="post">
-        <h2>Ships in the Dark</h2>
-        <div class="meta">May 18, 2026 · Night Reflections</div>
+    <div class="section-title">
+        <span>Journal Entries</span>
+        <h2>Collected Observations</h2>
+    </div>
 
-        <p>
-            At night, distant ships become floating stars.
-            Tiny lights drift across the black water,
-            carrying unknown stories toward unknown destinations.
-        </p>
+    <section class="grid">
 
-        <p>
-            Watching them reminds us that loneliness and solitude are not the same.
-            One is a wound. The other is a place where thoughts can breathe.
-        </p>
+        <article class="card">
+            <div class="category">Nature</div>
+            <h4>The Sound Between Waves</h4>
+            <p>
+                The most beautiful part of the ocean is not the wave itself,
+                but the brief silence that follows.
+            </p>
+        </article>
 
-        <p class="highlight">
-            Not every journey needs an audience.
-        </p>
-    </article>
+        <article class="card">
+            <div class="category">Reflection</div>
+            <h4>Letters Never Sent</h4>
+            <p>
+                Some thoughts belong to the horizon.
+                They are written for no one and understood by the sea.
+            </p>
+        </article>
+
+        <article class="card">
+            <div class="category">Travel</div>
+            <h4>The Last Lighthouse</h4>
+            <p>
+                Standing at the edge of the island,
+                the lighthouse reminds visitors that guidance
+                often appears in darkness.
+            </p>
+        </article>
+
+    </section>
 
     <div class="divider"></div>
 
-    <article class="post">
-        <h2>Where the Horizon Ends</h2>
-        <div class="meta">May 27, 2026 · Deep Thoughts</div>
+    <div class="section-title">
+        <span>Editor's Note</span>
+        <h2>Why This Journal Exists</h2>
+    </div>
 
+    <section style="max-width:800px;margin:auto;text-align:center;">
         <p>
-            The horizon is one of nature's greatest illusions.
-            It looks like a destination, yet it moves farther away
-            every time we approach it.
+            The Island Journal was created as a celebration of slow living.
+            In a world obsessed with speed, productivity, and constant connection,
+            this publication explores a different idea:
+            that silence, reflection, and solitude still have value.
         </p>
 
+        <br>
+
         <p>
-            Perhaps life works the same way.
-            We chase certainty only to discover that meaning
-            exists in the journey itself.
+            Every page is a reminder that sometimes the most meaningful journeys
+            happen when there is nowhere left to rush.
         </p>
+    </section>
 
-        <div class="quote">
-            "The ocean does not promise answers. It teaches acceptance."
-        </div>
-    </article>
+</main>
 
-</div>
-
-<footer>
-    Beyond The Tide © 2026<br>
-    Written between moonlight and seawater.
+<footer class="footer">
+    <h3>The Island Journal</h3>
+    <p>
+        Independent Coastal Magazine · Est. 2026
+    </p>
 </footer>
-
-<div class="wave"></div>
 
 </body>
 </html>
