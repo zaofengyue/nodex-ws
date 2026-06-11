@@ -1,5 +1,5 @@
 {
-  "name": "nodex-argo",
+  "name": "nodex-ws",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
