@@ -2,13 +2,6 @@
 
 基于 xray 的多协议代理工具，同时支持 VMess、VLESS、Trojan 三种协议，支持源码部署和 Docker 镜像部署，自动识别平台域名和节点名称。
 
-## 工作原理
-
-```
-客户端 → 平台域名:443 → Node.js HTTP 服务 → xray(内部)
-```
-
-适用于有对外路由的平台（Railway、Render、Zeabur、CloudFoundry 等），不适用于没有对外路由的平台（如 idx、SAP BAS 等，请使用 nodex-argo）。
 
 ## 部署方式
 
@@ -56,7 +49,7 @@ docker run -d \
 | `TROJAN_PASS` | Trojan 密码 | 自动生成 |
 | `PORT` | 监听端口 | 平台注入或自动 |
 | `DOMAIN` | 手动指定域名或公网 IP | 自动识别 |
-| `NAME` | 节点名称 | 自动识别国家+平台/ASN |
+| `NAME` | 节点名称 | 自动生成 |
 | `SUB` | 订阅路径 | `sub` |
 
 也可以在 `index.js` 顶部预留配置里填写，优先级高于环境变量：
@@ -100,6 +93,7 @@ function getRandomArray(array) {
   return array[randomIndex];
 }
 ```
+## 内存需求
 
 最低 256MB，建议 512MB。
 
