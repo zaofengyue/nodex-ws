@@ -106,7 +106,6 @@ async function main() {
     fs.writeFileSync(TROJAN_FILE, TROJAN_PASS);
   }
 
-  // 对外端口：预设 → 平台注入 → 自动找空闲端口
   const INBOUND_PORT = PRESET_PORT
     ? parseInt(PRESET_PORT)
     : process.env.PORT
@@ -116,7 +115,6 @@ async function main() {
   const SUB_RAW = PRESET_SUB || process.env.SUB || 'sub';
   const SUB_PATH = '/' + SUB_RAW.replace(/^\//, '');
 
-  // 域名识别
   let HOST = '';
   let PLATFORM = '';
 
@@ -267,7 +265,7 @@ async function main() {
       socket.pipe(proxy);
       proxy.pipe(socket);
     });
-    proxy.on('error', () => socket.destroy();
+    proxy.on('error', () => socket.destroy());
     socket.on('error', () => proxy.destroy());
   });
 
@@ -308,6 +306,3 @@ main().catch(err => {
   console.error(err);
   process.exit(1);
 });
-EOF
-node --check /tmp/nodex_ws.js && echo "语法检查通过" || echo "语法错误"</parameter>
-<parameter name="description">验证修正后的nodex-ws语法</parameter>
