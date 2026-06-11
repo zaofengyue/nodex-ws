@@ -77,34 +77,29 @@ const PRESET_SUB         = '';
 | `https://你的域名/` | 伪装页面 |
 | `https://你的域名/sub` | 订阅链接（base64） |
 
-## 节点信息
 
-| 协议 | WS 路径 |
-|---|---|
-| VMess | `/fengyue-vm` |
-| VLESS | `/fengyue-vl` |
-| Trojan | `/fengyue-tr` |
-
-## TLS 自动判断
-
-| HOST 类型 | TLS | 客户端端口 |
-|---|---|---|
-| 域名 | tls | 443 |
-| 公网 IP | none | 自动分配的端口 |
-
-## 节点名称自动识别规则
-
+## 使用cloudflare workers 或 snippets 反代域名给节点套cdn加速
+```bash
+export default {
+    async fetch(request, env) {
+        let url = new URL(request.url);
+        if (url.pathname.startsWith('/')) {
+            var arrStr = [
+                'change.your.domain', // 此处单引号里填写你的节点伪装域名
+            ];
+            url.protocol = 'https:'
+            url.hostname = getRandomArray(arrStr)
+            let new_request = new Request(url, request);
+            return fetch(new_request);
+        }
+        return env.ASSETS.fetch(request);
+    },
+};
+function getRandomArray(array) {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
 ```
-手动指定 NAME
-        ↓
-识别到平台 → 国家简称+平台名（例如 SG-Railway）
-        ↓
-识别不到平台 → 国家简称+ASN组织名（例如 US-Amazon.com）
-        ↓
-识别失败 → xray
-```
-
-## 内存需求
 
 最低 256MB，建议 512MB。
 
