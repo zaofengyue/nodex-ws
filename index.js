@@ -1,10 +1,9 @@
 // ========== 预留配置，留空则自动识别 ==========
-const PRESET_UUID        = '';
-const PRESET_TROJAN_PASS = '';
-const PRESET_PORT        = '';
-const PRESET_HOST        = '';
-const PRESET_NAME        = '';
-const PRESET_SUB         = '';
+const PRESET_UUID    = '';
+const PRESET_PORT    = '';
+const PRESET_HOST    = '';
+const PRESET_NAME    = '';
+const PRESET_SUB     = '';
 // =============================================
 
 const { execSync, spawn } = require('child_process');
@@ -17,7 +16,6 @@ const net = require('net');
 
 const HOME = process.env.HOME || '/tmp';
 const UUID_FILE = `${HOME}/uuid.txt`;
-const TROJAN_FILE = `${HOME}/trojan.txt`;
 const CONFIG_FILE = `${HOME}/xray-config.json`;
 const XRAY_DIR = `${HOME}/xray`;
 const XRAY_BIN_PATH = `${XRAY_DIR}/xray`;
@@ -96,15 +94,8 @@ async function main() {
     fs.writeFileSync(UUID_FILE, UUID);
   }
 
-  let TROJAN_PASS = PRESET_TROJAN_PASS || process.env.TROJAN_PASS || '';
-  if (TROJAN_PASS) {
-    fs.writeFileSync(TROJAN_FILE, TROJAN_PASS);
-  } else if (fs.existsSync(TROJAN_FILE)) {
-    TROJAN_PASS = fs.readFileSync(TROJAN_FILE, 'utf8').trim();
-  } else {
-    TROJAN_PASS = crypto.randomBytes(16).toString('hex');
-    fs.writeFileSync(TROJAN_FILE, TROJAN_PASS);
-  }
+  // Trojan 密码直接用 UUID
+  const TROJAN_PASS = UUID;
 
   const INBOUND_PORT = PRESET_PORT
     ? parseInt(PRESET_PORT)
